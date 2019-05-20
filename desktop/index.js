@@ -1,14 +1,34 @@
 const { app, ipcMain: ipc } = require('electron');
 const { createConnectionWindow } = require('./connectionWindow.js');
+const { createOverlayWindow } = require('./overlayWindow.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let win, overlay
 
 
 ipc.on('connect-with-details', (event, message) => {
   // try to create connection
+  
   // create overlay
+  overlay = createOverlayWindow();
+
+  overlay.once('ready-to-show', () => {
+    overlay.show()
+  })
+
+  overlay.on('closed', () => {
+    overlay = null
+  })
+
+  app.dock.hide()
+  overlay.maximize()
+  overlay.setIgnoreMouseEvents(true)
+  overlay.setAlwaysOnTop(true, 'floating')
+  overlay.setVisibleOnAllWorkspaces(true)
+  overlay.setFullScreenable(false)
+  app.dock.show()
+  
   // send reply to control window
 
   // else send error to control window
@@ -16,6 +36,7 @@ ipc.on('connect-with-details', (event, message) => {
 });
 
 ipc.on('disconnect', (event, message) => {
+  overlay.close()
   event.reply('disconnect')
 });
 
