@@ -4,7 +4,7 @@ class ConnectionWindow extends BrowserWindow {
     constructor(options) {
         const defaultOptions = {
             width: 450,
-            height: 200,
+            height: 250,
             show: false,
             webPreferences: {
                 nodeIntegration: true

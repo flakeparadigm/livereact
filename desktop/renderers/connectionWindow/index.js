@@ -1,41 +1,68 @@
 const { ipcRenderer: ipc } = require('electron');
-const formEl = document.getElementById("connectForm");
-const roomNameEl = document.getElementById("roomName");
-const startButtonEl = document.getElementById("startButton");
+const formEl = document.getElementById('connectForm');
+const roomNameEl = document.getElementById('roomName');
+const startButtonEl = document.getElementById('startButton');
+const errorTextEl = document.getElementById('errorText');
 const startText = startButtonEl.innerText;
+let connected = false;
 
 roomNameEl.focus();
 
 formEl.addEventListener('submit', (e) => {
     e.preventDefault();
     startLoading();
-    ipc.send('start-with-details', {
-        roomName: roomNameEl.value
-    })
+    if (connected) {
+        ipc.send('disconnect')
+    } else {
+        ipc.send('connect-with-details', {
+            roomName: roomNameEl.value
+        })
+    }
 });
 
 
 function startLoading() {
-    // formEl.classList.add('loading');
+    // cleanup other statuses
+    formEl.classList.remove('error');
+    formEl.classList.remove('connected');
+    errorTextEl.innerText = '';
+
+    formEl.classList.add('loading');
     roomNameEl.setAttribute('disabled', 'true');
     startButtonEl.innerText = '... ⏳';
     startButtonEl.setAttribute('disabled', 'true');
 }
 
-
-function stopLoading() {
+function handleError(_, message) {
     formEl.classList.remove('loading');
-    roomNameEl.removeAttribute('disabled');
-    startButtonEl.innerText = startText;
-    startButtonEl.removeAttribute('disabled');
-}
+    formEl.classList.add('error');
 
-function handleError(event, message) {
-    console.log('error', arguments);
+    roomNameEl.removeAttribute('disabled');
+    startButtonEl.removeAttribute('disabled');
+
+    startButtonEl.innerText = startText;
+    errorTextEl.innerText = message;
 }
 ipc.on('error', handleError);
 
-function handleSuccess(event, message) {
-    console.log('success', arguments);
+function handleSuccess() {
+    formEl.classList.remove('loading');
+    formEl.classList.add('connected');
+
+    startButtonEl.removeAttribute('disabled');
+
+    startButtonEl.innerText = 'Leave 🚪';
+    connected = true;
 }
 ipc.on('success', handleSuccess);
+
+
+function handleDisconnect() {
+    formEl.classList.remove('loading');
+    roomNameEl.removeAttribute('disabled');
+    startButtonEl.removeAttribute('disabled');
+
+    startButtonEl.innerText = startText;
+    connected = false;
+}
+ipc.on('disconnect', handleDisconnect);

@@ -6,8 +6,17 @@ const { createConnectionWindow } = require('./connectionWindow.js');
 let win
 
 
-ipc.on('start-with-details', (event, message) => {
-  event.reply('error', 'test')
+ipc.on('connect-with-details', (event, message) => {
+  // try to create connection
+  // create overlay
+  // send reply to control window
+
+  // else send error to control window
+  event.reply('success', 'test')
+});
+
+ipc.on('disconnect', (event, message) => {
+  event.reply('disconnect')
 });
 
 

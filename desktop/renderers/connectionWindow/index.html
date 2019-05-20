@@ -46,6 +46,31 @@
                 color: white;
                 width: 100px;
             }
+
+            .statusText {
+                padding: 0.5em 0.2em;
+                border: 2px solid;
+                display: none;
+            }
+
+            #loadingText {
+                background: #666611;
+                border-color: #ffff99;
+            }
+
+            #errorText {
+                background: #661111;
+                border-color: #ff6666;
+            }
+
+            #connectedText {
+                background: #116611;
+                border-color: #66ff66;
+            }
+
+            .error #errorText, .loading #loadingText, .connected #connectedText {
+                display: block;
+            }
         </style>
     </head>
     <body>
@@ -54,6 +79,10 @@
             <label for="roomName">Room name <small>(share this with guests to join)</small></label>
             <input id="roomName" type="text" placeholder="Room name" />
             <button id="startButton">Start 📡</button>
+
+            <p id="loadingText" class="statusText">Working...</p>
+            <p id="errorText" class="statusText">Test Error</p>
+            <p id="connectedText" class="statusText">Connected. Click "Leave" to disconnect.</p>
         </form>
     </body>
 
