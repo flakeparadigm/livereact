@@ -1,43 +1,50 @@
 const { app, ipcMain: ipc } = require('electron');
 const { createConnectionWindow } = require('./connectionWindow.js');
 const { createOverlayWindow } = require('./overlayWindow.js');
+const { WsClient } = require('./wsClient');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win, overlay
+const wsClient = new WsClient('localhost');
 
 
 ipc.on('connect-with-details', (event, message) => {
   // try to create connection
-  
-  // create overlay
-  overlay = createOverlayWindow();
+  wsClient.connect()
+    .then((socket) => {
+      // on success
+      // create overlay
+      overlay = createOverlayWindow();
 
-  overlay.once('ready-to-show', () => {
-    overlay.show()
-  })
+      overlay.once('ready-to-show', () => {
+        overlay.show()
+      })
 
-  overlay.on('closed', () => {
-    overlay = null
-  })
+      overlay.on('closed', () => {
+        overlay = null
+      })
 
-  app.dock.hide()
-  overlay.maximize()
-  overlay.setIgnoreMouseEvents(true)
-  overlay.setAlwaysOnTop(true, 'floating')
-  overlay.setVisibleOnAllWorkspaces(true)
-  overlay.setFullScreenable(false)
-  app.dock.show()
-  
-  // send reply to control window
+      app.dock.hide()
+      overlay.maximize()
+      overlay.setIgnoreMouseEvents(true)
+      overlay.setAlwaysOnTop(true, 'floating')
+      overlay.setVisibleOnAllWorkspaces(true)
+      overlay.setFullScreenable(false)
+      app.dock.show()
 
-  // else send error to control window
-  event.reply('success', 'test')
+      // notify control screen of success
+      event.reply('success')
+    })
+    .catch((error) => {
+      event.reply('error', error.toString());
+    });
 });
 
 ipc.on('disconnect', (event, message) => {
-  overlay.close()
-  event.reply('disconnect')
+  wsClient.close();
+  overlay.close();
+  event.reply('disconnect');
 });
 
 
