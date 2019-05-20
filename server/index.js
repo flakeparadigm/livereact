@@ -1,36 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const ioclient = require("socket.io-client");
+const ioclient = require('socket.io-client');
+const io = require('socket.io');
 
+/*--------------------------------------------------------------------------
+ * WEB-SOCKET SERVER INITIALIZATION
+ *
+ * For managing web-socket configuration, connections, lifecycle etc.
+ */
+const server = io.listen(8800);
+const clientConnections = new Map();
 
-
-// -------------------------------------------
-
-// SERVER-SIDE (Routing reactions from endpoint to websockets)
-
-
-// WEB-SOCKET server initialisation
-// For managing websocket configuration, connections, lifecycle etc.
-const
-    io = require("socket.io"),
-    server = io.listen(8800);
-
-let
-    clientConnections = new Map();
-
-server.on("connection", (socket) => {
+server.on('connection', (socket) => {
     console.info(`Client connected [id=${socket.id}]`);
     clientConnections.set(socket, socket.id);
 
-    socket.on("disconnect", () => {
+    socket.on('disconnect', () => {
         clientConnections.delete(socket);
         console.info(`Client gone [id=${socket.id}]`);
     });
 });
 
-
-// WEB-APP server initialisation
-// For exposing endpoints that clients can send reactions to
+/*--------------------------------------------------------------------------
+ * WEB-APP SERVER INITIALIZATION
+ *
+ * For exposing API endpoints that clients can send reactions to.
+ */
 const app = express();
 
 app.use(bodyParser.json());
