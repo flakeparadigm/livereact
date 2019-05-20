@@ -58,6 +58,7 @@ ipc.on('success', handleSuccess);
 
 
 function handleDisconnect() {
+    formEl.classList.remove('connected');
     formEl.classList.remove('loading');
     roomNameEl.removeAttribute('disabled');
     startButtonEl.removeAttribute('disabled');

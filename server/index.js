@@ -22,7 +22,8 @@ const clientConnections = new Map();
 
 server.on('connection', (socket) => {
     console.info(`Client connected [id=${socket.id}]`);
-    clientConnections.set(socket, socket.id);
+    // initialize this client's sequence number
+    clientConnections.set(socket.id, socket);
 
     socket.on('disconnect', () => {
         clientConnections.delete(socket);
@@ -42,9 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.post('/react', (req, res) => {
-    for (const [client] of clientConnections.entries()) {
-        client.emit('reaction', req.body);
-    }
+    clientConnections.forEach((client) => {
+        client.emit("reaction", req.body);
+    });
     // Send a meaningful response payload
     res.json({ status: 'OK' });
 });

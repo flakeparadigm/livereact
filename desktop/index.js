@@ -5,9 +5,8 @@ const { WsClient } = require('./wsClient');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win, overlay
+let control, overlay
 const wsClient = new WsClient('localhost');
-
 
 ipc.on('connect-with-details', (event, message) => {
   // try to create connection
@@ -33,6 +32,11 @@ ipc.on('connect-with-details', (event, message) => {
       overlay.setFullScreenable(false)
       app.dock.show()
 
+      socket.on('disconnect', disconnectHandler);
+      socket.on('reaction', (reaction) => {
+        overlay.webContents.send('show-reaction', reaction);
+      });
+
       // notify control screen of success
       event.reply('success')
     })
@@ -41,28 +45,30 @@ ipc.on('connect-with-details', (event, message) => {
     });
 });
 
-ipc.on('disconnect', (event, message) => {
+const disconnectHandler = () => {
   wsClient.close();
-  overlay.close();
-  event.reply('disconnect');
-});
+  overlay && overlay.close();
+  control.webContents.send('disconnect', null)
+};
+
+ipc.on('disconnect', disconnectHandler);
 
 
 function createWindow() {
   // Create the browser window.
-  win = createConnectionWindow();
+  control = createConnectionWindow();
 
-  win.once('ready-to-show', () => {
-    win.show()
+  control.once('ready-to-show', () => {
+    control.show()
   })
 
 
   // Emitted when the window is closed.
-  win.on('closed', () => {
+  control.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
+    control = null
   })
 }
 
@@ -83,7 +89,7 @@ app.on('window-all-closed', () => {
 // On macOS it's common to re-create a window in the app when the
 // dock icon is clicked and there are no other windows open.
 app.on('activate', () => {
-  if (win === null) {
+  if (control === null) {
     createWindow()
   }
 })
