@@ -1,24 +1,24 @@
-const { app, BrowserWindow } = require('electron')
+const { app, ipcMain: ipc } = require('electron');
+const { createConnectionWindow } = require('./connectionWindow.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-function createWindow () {
+
+ipc.on('start-with-details', (event, message) => {
+  event.reply('error', 'test')
+});
+
+
+function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
+  win = createConnectionWindow();
+
+  win.once('ready-to-show', () => {
+    win.show()
   })
 
-  // and load the index.html of the app.
-  win.loadFile('index.html')
-
-  // Open the DevTools.
-//   win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -43,13 +43,10 @@ app.on('window-all-closed', () => {
   }
 })
 
+// On macOS it's common to re-create a window in the app when the
+// dock icon is clicked and there are no other windows open.
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (win === null) {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

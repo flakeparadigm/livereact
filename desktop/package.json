@@ -19,5 +19,8 @@
   "homepage": "https://github.com/flakeparadigm/livereact#readme",
   "devDependencies": {
     "electron": "^5.0.1"
+  },
+  "dependencies": {
+    "socket.io-client": "^2.2.0"
   }
 }
