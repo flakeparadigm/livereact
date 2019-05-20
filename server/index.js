@@ -1,3 +1,12 @@
+/**
+ * Server/index.js
+ *
+ * Configures and manages web-socket server;
+ * Configures and manages web server;
+ * Defines routes for public web API endpoints;
+ * Routes reactions from API endpoints to web-socket clients
+ */
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const ioclient = require('socket.io-client');
