@@ -26,7 +26,7 @@ const sendRequest = (emoji) => {
     console.log('Sending', emoji);
 
     let data = JSON.stringify({
-        roomName: roomNameEl.innerText,
+        roomName: roomNameEl.value,
         reaction: {
             content: emoji
         }
