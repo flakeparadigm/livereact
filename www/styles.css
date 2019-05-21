@@ -1,0 +1,17 @@
+body {
+    padding: 30px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.emoji-container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.emoji {
+    font-size: 24px;
+    margin: 5px;
+}

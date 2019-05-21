@@ -75,7 +75,7 @@ socketServer.on(EVENTS.CONNECTION, (socket) => {
  * For exposing API endpoints that clients can send reactions to.
  */
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('../www'));
 
 app.post('/react', (req, res) => {
     const { roomName, reaction } = req.body;
