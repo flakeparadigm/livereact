@@ -14,7 +14,7 @@ $ npm start --prefix desktop
 
 **Running the Server/Attendee Client**
 ```
-$ cd ~/bath/to/repo
+$ cd ~/path/to/repo
 $ npm install --prefix server
 $ npm start --prefix server
 ```
