@@ -17,7 +17,7 @@ const io = require('socket.io');
  *
  * For managing web-socket configuration, connections, lifecycle etc.
  */
-const server = io.listen(8800);
+const server = io.listen(process.env.PORT || 8800);
 const clientConnections = new Map();
 
 server.on('connection', (socket) => {
@@ -49,4 +49,4 @@ app.post('/react', (req, res) => {
     res.json({ status: 'OK' });
 });
 
-app.listen(3000, () => console.log('server started'));
+app.listen(process.env.PORT || 3000, () => console.log('server started'));
