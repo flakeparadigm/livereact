@@ -20,12 +20,16 @@ const emojis = [
 ];
 
 const container = document.getElementById('emoji-container');
+const roomNameEl = document.getElementById('room-name');
 
 const sendRequest = (emoji) => {
     console.log('Sending', emoji);
 
     let data = JSON.stringify({
-        content: emoji
+        roomName: roomNameEl.innerText,
+        reaction: {
+            content: emoji
+        }
     });
 
     const axiosConfig = {
