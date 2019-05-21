@@ -34,8 +34,6 @@ const axiosConfig = {
 };
 
 const sendRequest = (emoji) => {
-    console.log('Sending', emoji);
-
     let data = JSON.stringify({
         roomName: roomNameEl.value,
         reaction: {
@@ -46,15 +44,10 @@ const sendRequest = (emoji) => {
     const endpoint = '/react';
 
     axios.post(`${hostUrl}${endpoint}`, data, axiosConfig)
-        .then((response) => {
-            console.log(response);
-        })
         .catch((error) => {
             console.log(error);
-            // errorAlertEl.innerHTML = 'Room does not exist!';
+            showError('Could not connect to room!');
             emojiContainer.classList.add('hide');
-            roomForm.classList.remove('hide');
-            errorAlertEl.classList.remove('hide');
         });
 };
 
