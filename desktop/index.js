@@ -6,7 +6,7 @@ const { WsClient } = require('./wsClient');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let control, overlay
-const wsClient = new WsClient('localhost');
+const wsClient = new WsClient('learnosity-livereact.herokuapp.com');
 
 ipc.on('connect-with-details', (event, message) => {
   // try to create connection

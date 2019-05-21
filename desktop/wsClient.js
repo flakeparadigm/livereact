@@ -1,7 +1,7 @@
 const io = require('socket.io-client');
 
 class WsClient {
-    constructor(host, port=8800) {
+    constructor(host, port=80) {
         this.host = `ws://${host}:${port}`;
         this.socket = null;
     }
