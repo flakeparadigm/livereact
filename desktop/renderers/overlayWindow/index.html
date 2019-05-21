@@ -16,12 +16,25 @@
                 position: absolute;
                 width: 1em;
                 height: 1em;
+                animation: floater 3s ease-in-out;
+            }
+
+            @keyframes floater {
+                0% {
+                    left: 0;
+                }
+                50% {
+                    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+                    transform: translate3D(100px, 100px, 0);
+                }
+                100% {
+                    left: 100%;
+                }
             }
         </style>
     </head>
     <body>
         <div id="emojiContainer">
-
         </div>
         <script src="./index.js"></script>
     </body>
