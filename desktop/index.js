@@ -19,6 +19,7 @@ ipc.on('connect-with-details', (event, { roomName }) => {
 
       overlay.once('ready-to-show', () => {
         overlay.show()
+        app.dock.show()
       })
 
       overlay.on('closed', () => {
@@ -31,7 +32,6 @@ ipc.on('connect-with-details', (event, { roomName }) => {
       overlay.setAlwaysOnTop(true, 'floating')
       overlay.setVisibleOnAllWorkspaces(true)
       overlay.setFullScreenable(false)
-      app.dock.show()
 
       socket.on(EVENTS.DISCONNECT, disconnectHandler);
       socket.on(EVENTS.REACTION, (reaction) => {
