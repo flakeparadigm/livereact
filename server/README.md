@@ -25,7 +25,7 @@ node index.js
 An example of how to connect (using nodejs and socket.io):
 
 ```js
-const webSocketClient = ioclient.connect("ws://10.20.8.171:8800");
+const webSocketClient = ioclient.connect("ws://learnosity-livereact.herokuapp:80");
 webSocketClient.on("reaction", (msg) => console.info(msg));
 ```
 
