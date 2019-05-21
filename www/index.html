@@ -8,20 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <link rel="stylesheet" href="./styles.css">
-    <title>Document</title>
+    <title>Live React</title>
 </head>
 <body>
-    <input type="text" id="room-name">
+    <article id="error-message" class="message is-danger error-message hide">
+      <div class="message-header">
+        <p>Error</p>
+        <button id="error-message-close" class="delete" aria-label="delete"></button>
+      </div>
+      <div id="error-message-body" class="message-body">
+        Room not found!
+      </div>
+    </article>
     <div class="container">
         <div class="columns">
             <div class="column">
-                <h2>Live React</h2>
+                <h1>Live React</h1>
+                <div id="room-form">
+                    <input class="input" type="text" id="room-name" placeholder="Room name">
+                    <button id="connect-btn" class="button is-primary">Connect</button>
+                </div>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="columns">
-            <div id="emoji-container" class="column">
+            <div id="emoji-container" class="column hide">
 
             </div>
         </div>

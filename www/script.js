@@ -19,8 +19,19 @@ const emojis = [
     '😽','🙀','😿','😾'
 ];
 
-const container = document.getElementById('emoji-container');
+const emojiContainer = document.getElementById('emoji-container');
+const roomForm = document.getElementById('room-form');
 const roomNameEl = document.getElementById('room-name');
+const errorAlertEl = document.getElementById('error-message');
+const errorMessageEl = document.getElementById('error-message-body');
+
+const hostUrl = 'http://localhost:3000';
+const axiosConfig = {
+    'headers': {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    }
+};
 
 const sendRequest = (emoji) => {
     console.log('Sending', emoji);
@@ -32,13 +43,6 @@ const sendRequest = (emoji) => {
         }
     });
 
-    const axiosConfig = {
-        'headers': {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        }
-    };
-    const hostUrl = 'https://learnosity-livereact.herokuapp.com';
     const endpoint = '/react';
 
     axios.post(`${hostUrl}${endpoint}`, data, axiosConfig)
@@ -47,15 +51,60 @@ const sendRequest = (emoji) => {
         })
         .catch((error) => {
             console.log(error);
+            // errorAlertEl.innerHTML = 'Room does not exist!';
+            emojiContainer.classList.add('hide');
+            roomForm.classList.remove('hide');
+            errorAlertEl.classList.remove('hide');
         });
 };
+
+const showError = (message, context) => {
+    console.error(context || message);
+    errorMessageEl.innerHTML = message;
+    roomForm.classList.remove('hide');
+    errorAlertEl.classList.remove('hide');
+};
+
+const hideError = () => {
+    roomForm.classList.add('hide');
+    errorAlertEl.classList.add('hide');
+};
+
+document.getElementById('error-message').addEventListener('click', (event) => {
+    errorAlertEl.classList.add('hide');
+});
+
+document.getElementById('connect-btn').addEventListener('click', (event) => {
+    if (!roomNameEl.value.length) {
+        showError('Must provide a room name.');
+        emojiContainer.classList.add('hide');
+        return;
+    }
+
+    axios.post(`${hostUrl}/room-exists`, JSON.stringify({
+        roomName: roomNameEl.value
+    }), axiosConfig)
+        .then((response) => {
+            if (response.data.exists) {
+                hideError();
+                emojiContainer.classList.remove('hide');
+            } else {
+                showError('Room does not exist!');
+                emojiContainer.classList.add('hide');
+            }
+        })
+        .catch((error) => {
+            showError('Cannot connect to room!', error);
+            emojiContainer.classList.add('hide');
+        });
+});
 
 emojis.forEach(emoji => {
     let button = document.createElement('button');
 
     button.className = 'button emoji';
     button.innerText = emoji;
-    container.appendChild(button);
+    emojiContainer.appendChild(button);
 
     button.addEventListener('click', () => {
         sendRequest(emoji);
