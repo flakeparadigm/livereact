@@ -25,7 +25,7 @@ const roomNameEl = document.getElementById('room-name');
 const errorAlertEl = document.getElementById('error-message');
 const errorMessageEl = document.getElementById('error-message-body');
 
-const hostUrl = 'http://localhost:3000';
+const hostUrl = 'https://learnosity-livereact.herokuapp.com';
 const axiosConfig = {
     'headers': {
         'Content-Type': 'application/json',
