@@ -16,10 +16,18 @@
                 position: absolute;
                 width: 1em;
                 height: 1em;
-                animation: floater 3s ease-in-out forwards;
+            }
+            .animation-curve {
+                animation: curve-animation 3s ease-in-out forwards;
+            }
+            .animation-rotate {
+                animation: rotate-animation 3s ease-in-out forwards;
+            }
+            .animation-scale {
+                animation: scale-animation 3s ease-in-out forwards;
             }
 
-            @keyframes floater {
+            @keyframes curve-animation {
                 0% {
                     left: -100px;
                 }
@@ -29,6 +37,34 @@
                 }
                 100% {
                     left: 100%;
+                }
+            }
+
+            @keyframes rotate-animation {
+                0% {
+                    left: -100px;
+                }
+                50% {
+                    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+                    transform: translate3D(100px, 100px, 0) rotate(180deg);
+                }
+                100% {
+                    left: 100%;
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes scale-animation {
+                0% {
+                    left: -100px;
+                }
+                50% {
+                    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
+                    transform: translate3D(100px, 100px, 0) scale(1.5);
+                }
+                100% {
+                    left: 100%;
+                    transform: scale(1);
                 }
             }
         </style>
