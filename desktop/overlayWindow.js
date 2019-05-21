@@ -7,7 +7,8 @@ class OverlayWindow extends BrowserWindow {
             transparent: true,
             webPreferences: {
                 nodeIntegration: true
-            }
+            },
+            hasShadow: false
           };
 
         super(Object.assign(defaultOptions, options));

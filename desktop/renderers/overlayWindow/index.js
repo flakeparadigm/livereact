@@ -12,8 +12,8 @@ ipc.on('show-reaction', (event, reaction) => {
 
     emojiEl.classList.add('emoji');
     emojiEl.innerText= reaction.content;
-    emojiEl.style.top = getRandom(100, maxVertical)+'px';
-    emojiEl.style.left = 100;
+    emojiEl.style.top = getRandom(0, maxVertical)+'px';
+    emojiEl.style.left = -100;
 
     emojiContainerEl.appendChild(emojiEl);
 
