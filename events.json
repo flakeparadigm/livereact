@@ -1,0 +1,8 @@
+{
+    "CONNECTION": "connection",
+    "CONNECT": "connect",
+    "CONNECT_ERROR": "connect_error",
+    "DISCONNECT": "disconnect",
+    "CREATE_ROOM": "create-room",
+    "REACTION": "reaction"
+}

@@ -2,15 +2,16 @@ const { app, ipcMain: ipc } = require('electron');
 const { createConnectionWindow } = require('./connectionWindow.js');
 const { createOverlayWindow } = require('./overlayWindow.js');
 const { WsClient } = require('./wsClient');
+const EVENTS = require('../events.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let control, overlay
 const wsClient = new WsClient('learnosity-livereact.herokuapp.com');
 
-ipc.on('connect-with-details', (event, message) => {
+ipc.on('connect-with-details', (event, { roomName }) => {
   // try to create connection
-  wsClient.connect()
+  wsClient.createRoom(roomName)
     .then((socket) => {
       // on success
       // create overlay
@@ -32,8 +33,8 @@ ipc.on('connect-with-details', (event, message) => {
       overlay.setFullScreenable(false)
       app.dock.show()
 
-      socket.on('disconnect', disconnectHandler);
-      socket.on('reaction', (reaction) => {
+      socket.on(EVENTS.DISCONNECT, disconnectHandler);
+      socket.on(EVENTS.REACTION, (reaction) => {
         overlay.webContents.send('show-reaction', reaction);
       });
 
