@@ -6,7 +6,7 @@ const EVENTS = require('../events.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let control, overlay
+let control, overlay;
 const wsClient = new WsClient('learnosity-livereact.herokuapp.com');
 
 ipc.on('connect-with-details', (event, { roomName }) => {
@@ -18,20 +18,20 @@ ipc.on('connect-with-details', (event, { roomName }) => {
       overlay = createOverlayWindow();
 
       overlay.once('ready-to-show', () => {
-        overlay.show()
-        app.dock.show()
-      })
+        overlay.show();
+        app.dock.show();
+      });
 
       overlay.on('closed', () => {
-        overlay = null
-      })
+        overlay = null;
+      });
 
-      app.dock.hide()
-      overlay.maximize()
-      overlay.setIgnoreMouseEvents(true)
-      overlay.setAlwaysOnTop(true, 'floating')
-      overlay.setVisibleOnAllWorkspaces(true)
-      overlay.setFullScreenable(false)
+      app.dock.hide();
+      overlay.maximize();
+      overlay.setIgnoreMouseEvents(true);
+      overlay.setAlwaysOnTop(true, 'floating');
+      overlay.setVisibleOnAllWorkspaces(true);
+      overlay.setFullScreenable(false);
 
       socket.on(EVENTS.DISCONNECT, disconnectHandler);
       socket.on(EVENTS.REACTION, (reaction) => {
@@ -39,7 +39,7 @@ ipc.on('connect-with-details', (event, { roomName }) => {
       });
 
       // notify control screen of success
-      event.reply('success')
+      event.reply('success');
     })
     .catch((error) => {
       event.reply('error', error.toString());
@@ -49,7 +49,7 @@ ipc.on('connect-with-details', (event, { roomName }) => {
 const disconnectHandler = () => {
   wsClient.close();
   overlay && overlay.close();
-  control.webContents.send('disconnect', null)
+  control.webContents.send('disconnect', null);
 };
 
 ipc.on('disconnect', disconnectHandler);
@@ -60,8 +60,8 @@ function createWindow() {
   control = createConnectionWindow();
 
   control.once('ready-to-show', () => {
-    control.show()
-  })
+    control.show();
+  });
 
 
   // Emitted when the window is closed.
@@ -69,28 +69,28 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    control = null
-  })
+    control = null;
+  });
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 // On macOS it's common to re-create a window in the app when the
 // dock icon is clicked and there are no other windows open.
 app.on('activate', () => {
   if (control === null) {
-    createWindow()
+    createWindow();
   }
-})
+});
