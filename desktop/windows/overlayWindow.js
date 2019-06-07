@@ -1,4 +1,5 @@
 const { BrowserWindow } = require('electron')
+const path = require('path');
 
 class OverlayWindow extends BrowserWindow {
     constructor(options) {
@@ -13,7 +14,7 @@ class OverlayWindow extends BrowserWindow {
 
         super(Object.assign(defaultOptions, options));
 
-        this.loadFile('./renderers/overlayWindow/index.html');
+        this.loadFile(path.join(__dirname, '../renderers/overlayWindow/index.html'));
     }
 }
 

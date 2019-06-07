@@ -1,6 +1,6 @@
 const { app, ipcMain: ipc } = require('electron');
-const { createConnectionWindow } = require('./connectionWindow.js');
-const { createOverlayWindow } = require('./overlayWindow.js');
+const { createConnectionWindow } = require('./windows/connectionWindow.js');
+const { createOverlayWindow } = require('./windows/overlayWindow.js');
 const { WsClient } = require('./wsClient');
 const EVENTS = require('../events.json');
 

@@ -1,0 +1,68 @@
+body {
+    background: #333;
+    color: white;
+    font-family: 'system-ui', sans-serif;
+    margin: 0;
+    padding: 1em 1em 0;
+}
+h1 {
+    margin-top: 0;
+    padding: 0;
+}
+label {
+    margin: 0.75em 0;
+}
+input {
+    display: inline-block;
+    margin: 0.75em 0;
+    font-size: 1rem;
+    line-height: 1em;
+    height: 1em;
+    padding: 0.5em 0.25em;
+    border: 2px solid #999;
+    background: #666;
+    color: white;
+    width: 300px;
+}
+input::placeholder {
+    color: #bbb;
+}
+input:focus {
+    border-color: white;
+}
+button {
+    display: inline-block;
+    margin: 0.75em 0;
+    font-size: 1rem;
+    line-height: 1em;
+    padding: 0.5em 0.25em;
+    border: 2px solid #999;
+    background: #666;
+    color: white;
+    width: 100px;
+}
+
+.statusText {
+    padding: 0.5em 0.2em;
+    border: 2px solid;
+    display: none;
+}
+
+#loadingText {
+    background: #666611;
+    border-color: #ffff99;
+}
+
+#errorText {
+    background: #661111;
+    border-color: #ff6666;
+}
+
+#connectedText {
+    background: #116611;
+    border-color: #66ff66;
+}
+
+.error #errorText, .loading #loadingText, .connected #connectedText {
+    display: block;
+}

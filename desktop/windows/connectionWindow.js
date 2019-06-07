@@ -1,4 +1,5 @@
 const { BrowserWindow } = require('electron')
+const path = require('path');
 
 class ConnectionWindow extends BrowserWindow {
     constructor(options) {
@@ -13,7 +14,7 @@ class ConnectionWindow extends BrowserWindow {
 
         super(Object.assign(defaultOptions, options));
 
-        this.loadFile('./renderers/connectionWindow/index.html');
+        this.loadFile(path.join(__dirname, '../renderers/connectionWindow/index.html'));
     }
 }
 
