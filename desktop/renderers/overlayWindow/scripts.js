@@ -2,24 +2,34 @@
 const { ipcRenderer: ipc } = require('electron');
 const emojiContainerEl = document.getElementById('emojiContainer');
 
-const displayTime = 3000
+const displayTime = 2100;
+const emojiSize = 100;
+const animations = ['animation-up-lr', 'animation-up-rl'];
 
-ipc.on('show-reaction', (event, reaction) => {
-    console.log(reaction);
+ipc.on('show-reaction', createEmoji);
+
+function createEmoji(_, reaction) {
+    if (!reaction || !reaction.content) {
+        return;
+    }
+
     const emojiEl = document.createElement('span');
-    const maxVertical = emojiContainerEl.getBoundingClientRect().height - 200
-    const getRandom = (min, max) => Math.floor(Math.random()*(max-min+1)+min);
-    const animations = ['animation-curve', 'animation-rotate', 'animation-scale']
+    const maxHorizontal = emojiContainerEl.getBoundingClientRect().width - emojiSize;
+    const maxVertical = 15;
+    const getRandom = (min, max) => Math.floor(
+        Math.random() * (max - min + 1) + min
+    );
 
     emojiEl.classList.add('emoji');
     emojiEl.classList.add(animations[getRandom(0, animations.length - 1)]);
     emojiEl.innerText= reaction.content;
-    emojiEl.style.top = getRandom(0, maxVertical)+'px';
-    emojiEl.style.left = -100;
+
+    emojiEl.style.left = `${getRandom(0, maxHorizontal)}px`;
+    emojiEl.style.bottom = `${getRandom(1, maxVertical)}%`;
 
     emojiContainerEl.appendChild(emojiEl);
 
     setTimeout(() => {
         emojiEl.remove();
     }, displayTime)
-});
+}
