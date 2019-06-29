@@ -1,6 +1,7 @@
 {
   "name": "livereact-server",
   "main": "index.js",
+  "version": "0.1.0",
   "scripts": {
     "start": "node index.js"
   },
