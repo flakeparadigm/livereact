@@ -14,7 +14,7 @@ class ConnectionWindow extends BrowserWindow {
 
         super(Object.assign(defaultOptions, options));
 
-        this.loadFile(path.join(__dirname, '../renderers/connectionWindow/index.html'));
+        this.loadFile(path.join(__dirname, '../../renderer/connectionWindow/index.html'));
     }
 }
 

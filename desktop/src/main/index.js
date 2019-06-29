@@ -2,7 +2,8 @@ const { app, ipcMain: ipc } = require('electron');
 const { createConnectionWindow } = require('./windows/connectionWindow.js');
 const { createOverlayWindow } = require('./windows/overlayWindow.js');
 const { WsClient } = require('./wsClient');
-const EVENTS = require('../events.json');
+const resources = require('../common/resources');
+const EVENTS = resources.require('events.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

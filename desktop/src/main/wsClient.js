@@ -1,5 +1,6 @@
 const io = require('socket.io-client');
-const EVENTS = require('../events.json');
+const resources = require('../common/resources');
+const EVENTS = resources.require('events.json');
 
 class WsClient {
     constructor(host, port=80) {

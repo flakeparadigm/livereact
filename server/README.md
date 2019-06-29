@@ -1,4 +1,4 @@
-# Live-React Web-socket / API server
+# Live React Web-socket / API server
 
 This subdirectory contains everything needed to run the web/web-socket server
 to route reactions via a public web API to web-socket clients.

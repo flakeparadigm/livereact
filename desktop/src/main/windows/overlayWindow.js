@@ -14,7 +14,7 @@ class OverlayWindow extends BrowserWindow {
 
         super(Object.assign(defaultOptions, options));
 
-        this.loadFile(path.join(__dirname, '../renderers/overlayWindow/index.html'));
+        this.loadFile(path.join(__dirname, '../../renderer/overlayWindow/index.html'));
     }
 }
 
