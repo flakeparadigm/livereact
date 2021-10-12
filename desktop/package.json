@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/flakeparadigm/livereact#readme",
   "devDependencies": {
-    "electron": "^9.4.0",
+    "electron": "^11.5.0",
     "electron-builder": "^20.44.4"
   },
   "dependencies": {
